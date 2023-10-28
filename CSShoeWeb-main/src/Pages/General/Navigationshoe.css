@@ -1,0 +1,74 @@
+.Navbar {
+    display: flex;
+    flex-direction: column;
+    background-color: #000;
+    margin: 0 2%;
+}
+.Navbarheader img {
+    width: 5.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu {
+    display: flex;
+    margin: 0 0 0 80px;
+    width: 100%;
+    justify-content: space-between;
+}
+.menu li {
+    margin: 0 25px 0 10px;
+    font-family: Unica One,sans-serif;
+    font-size: larger;
+    padding: 5px
+}
+.link-nav {
+    color: #000;
+}
+.Navbarbottom {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.Login {
+    margin-left: 2%;
+    color: #dbdbdb;
+}
+.Navbarheader {
+    display: flex;
+    flex-direction: row;
+}
+.search-cart-nav {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 40px;
+}
+.searchtxt {
+    margin-top: 1%;
+    margin-right: 1%;
+}
+.link-nav {
+    text-transform: uppercase;
+    min-width: 100px;
+    white-space: nowrap;
+}
+.cart {
+    color: #dbdbdb;
+}
+.login {
+    color: #cfcece;
+}
+.search-bars {
+    display: flex;
+    align-items: center;
+}
+.ant-input {
+    height: 32px;
+    padding: 0;
+    padding-top: 0.5%;
+    background-color: #fff;
+}
+.menu li {
+    width: 100%;
+}

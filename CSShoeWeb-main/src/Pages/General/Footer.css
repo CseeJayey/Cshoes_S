@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.Footer{
+    margin-top: 6%;
+}
+.Footer h1{
+    font-size: 100%;
+    color: #dbdbdb;
+}
+.Footer li{
+    list-style-type: none; 
+}
+.Footer li a{
+    color: #dbdbdb;
+}
+.container{
+    width: 100%;
+}
+.First-Color{
+    background-color: #000;
+    padding: 0 0;
+    padding-bottom: 15px;
+}
+.Second-color h1{
+   color: #262626 ;
+}
+.First-Color p{
+    color: #dbdbdb;
+}
+.Contact a{
+    margin: 0 15px;
+    color: #dbdbdb;
+}
+.Contact-Footer p{
+    margin-left: 15px;
+}
+.Contact-Footer{
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Footer li{
+    font-family: Unica One,sans-serif;
+}
+.Contact-Footer a{
+    color: #dbdbdb;
+}
+.service{
+    margin-top: 25px;
+}
+.follow-us{
+    margin-top: 25px;
+}
