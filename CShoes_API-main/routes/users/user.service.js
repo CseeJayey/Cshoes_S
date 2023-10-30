@@ -23,7 +23,8 @@ async function authenticate({ Username, Password }) {
     throw "Username or Password is incorrect";
   }
   // authentication successful
-  const token = jwt.sign({ sub: user.id }, secret, { expiresIn: "7d" });
+
+  const token = jwt.sign({ sub: user.UserID }, secret, { expiresIn: "7d" });
   return { ...omitHash(user.get()), token };
 }
 
@@ -87,7 +88,7 @@ async function getUser(id) {
 }
 
 function omitHash(user) {
-  const { PasswordHash, Role, ...userWithoutHash } = user;
+  const { PasswordHash, RoleID, Role, ...userWithoutHash } = user;
   userWithoutHash.isAdmin = Role.isAdmin;
   return userWithoutHash;
 }

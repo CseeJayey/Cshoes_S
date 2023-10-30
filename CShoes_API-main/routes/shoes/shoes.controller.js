@@ -4,10 +4,10 @@ const Joi = require("joi");
 
 const validateRequest = require("_middleware/validate-request");
 const shoeService = require("./shoe.service");
-
+const authorize = require("../../_middleware/authorize");
 // routes
 router.post("/create", createSchema, create);
-router.get("/", getAll);
+router.get("/", authorize, getAll);
 router.get("/:id", getById);
 router.put("/:id", updateSchema, update);
 router.delete("/:id", _delete);

@@ -12,8 +12,9 @@ function model(sequelize) {
     RoleID: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      // NDA_LHD_LNH
     },
-    Username: { type: DataTypes.STRING, allowNull: false },
+    Username: { type: DataTypes.STRING, allowNull: false, unique: "unique_username" },
     PasswordHash: { type: DataTypes.STRING, allowNull: false },
     Email: { type: DataTypes.STRING, allowNull: false },
   };
