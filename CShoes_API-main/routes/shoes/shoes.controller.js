@@ -7,27 +7,29 @@ const shoeService = require("./shoe.service");
 const authorize = require("../../_middleware/authorize");
 // routes
 router.post("/create", createSchema, create);
-router.get("/", authorize, getAll);
+router.get("/", getAll);
 router.get("/:id", getById);
 router.put("/:id", updateSchema, update);
 router.delete("/:id", _delete);
 
 module.exports = router;
 
+const schemaShoes = Joi.object({
+  // BrandID: Joi.number().integer().required(),
+  // ServiceID: Joi.number().integer().required(),
+  // DesignID: Joi.number().integer().required(),
+  Name: Joi.string().required(),
+  // Model: Joi.string().required(),
+  Price: Joi.number().integer().required(),
+  // Colour: Joi.string().required(),
+  // Material: Joi.string().required(),
+  // Size: Joi.number().integer().required(),
+  Description: Joi.string().required(),
+  URL: Joi.string().required(),
+});
+
 function createSchema(req, res, next) {
-  const schema = Joi.object({
-    BrandID: Joi.number().integer().required(),
-    ServiceID: Joi.number().integer().required(),
-    DesignID: Joi.number().integer().required(),
-    Name: Joi.string().required(),
-    Model: Joi.string().required(),
-    Price: Joi.number().integer().required(),
-    Colour: Joi.string().required(),
-    Material: Joi.string().required(),
-    Size: Joi.number().integer().required(),
-    Description: Joi.string().required(),
-  });
-  validateRequest(req, next, schema);
+  validateRequest(req, next, schemaShoes);
 }
 
 function create(req, res, next) {
@@ -52,19 +54,7 @@ function getById(req, res, next) {
 }
 
 function updateSchema(req, res, next) {
-  const schema = Joi.object({
-    BrandID: Joi.number().integer().required(),
-    ServiceID: Joi.number().integer().required(),
-    DesignID: Joi.number().integer().required(),
-    Name: Joi.string().required(),
-    Model: Joi.string().required(),
-    Price: Joi.number().integer().required(),
-    Colour: Joi.string().required(),
-    Material: Joi.string().required(),
-    Size: Joi.number().integer().required(),
-    Description: Joi.string().required(),
-  });
-  validateRequest(req, next, schema);
+  validateRequest(req, next, schemaShoes);
 }
 
 function update(req, res, next) {
