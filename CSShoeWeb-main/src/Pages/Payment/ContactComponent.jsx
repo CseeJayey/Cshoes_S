@@ -4,7 +4,7 @@ import './ContactComponent.css';
 import { Link } from 'react-router-dom';
 
 export default function ContactComponent() {
-    const [phone, setPhone] = useState("+84");
+    const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -30,7 +30,12 @@ export default function ContactComponent() {
     const handlePhoneChange = (e) => {
         const value = e.target.value;
         setPhone(value);
-        setPhoneValid(/^\+\d{11,12}$/.test(value));
+        // console.log(value.length);
+        if(value.length <10 || value.length >11 || value % 1 !== 0)
+        {
+            setPhoneValid(false);
+        }
+        else setPhoneValid(true)
     };
 
     const handleFormSubmit = (e) => {
@@ -41,6 +46,50 @@ export default function ContactComponent() {
         }
     };
 
+    const handleFirstNameChange = (e) => {
+        e.preventDefault(e.target.value);
+        setFirstName(e.target.value);
+        if(e.target.value !== "")
+        {
+            setFirstNameEmpty(false);
+        }
+        else
+            setFirstNameEmpty(true)
+    }
+
+    const handleLastNameChange = (e) => {
+        e.preventDefault(e.target.value);
+        setLastName(e.target.value);
+        if(e.target.value !== "")
+        {
+            setLastNameEmpty(false);
+        }
+        else
+            setLastNameEmpty(true)
+    }
+
+    const handleDistrictChange = (e) =>{
+        e.preventDefault(e.target.value);
+        setDistrict(e.target.value);
+        if(e.target.value !== "")
+        {
+            setDistrictEmpty(false);
+        }
+        else
+            setDistrictEmpty(true)
+    }
+
+    const handelApartmentChange = (e) => {
+        e.preventDefault(e.target.value);
+        setApartment(e.target.value);
+        if(e.target.value !== "")
+        {
+            setApartmentEmpty(false);
+        }
+        else
+        setApartmentEmpty(true)
+    }
+
     const validateFields = () => {
         let hasError = false;
 
@@ -49,8 +98,9 @@ export default function ContactComponent() {
             hasError = true;
         }
 
-        if (phone === "" || !/^\+\d{11,12}$/.test(phone)) {
-            setPhoneValid(false);
+        if (phone === "" || (phone.length <10 || phone.length >11 || phone % 1 !== 0)) {
+            console.log(phone.length);
+            setPhoneValid(true);
             hasError = true;
         }
 
@@ -59,12 +109,12 @@ export default function ContactComponent() {
             hasError = true;
         }
 
-        if (firstName === "" || !/^[a-zA-Z]+$/i.test(firstName)) {
+        if (firstName === "" ) {
             setFirstNameEmpty(true);
             hasError = true;
         }
 
-        if (lastName === "" || !/^[a-zA-Z]+$/i.test(lastName)) {
+        if (lastName === "" ) {
             setLastNameEmpty(true);
             hasError = true;
         }
@@ -111,6 +161,7 @@ export default function ContactComponent() {
                             type="text"
                             placeholder="First Name"
                             className={`${isFirstNameEmpty ? "error" : ""}`}
+                            onChange={handleFirstNameChange}
                         />
                         {isFirstNameEmpty && <div className="error-message">First Name is required</div>}
                     </div>
@@ -118,6 +169,7 @@ export default function ContactComponent() {
                         <input
                             type="text"
                             placeholder="Last Name"
+                            onChange={handleLastNameChange}
                             className={`${isLastNameEmpty ? "error" : ""}`}
                         />
                         {isLastNameEmpty && <div className="error-message">Last Name is required</div>}
@@ -128,7 +180,9 @@ export default function ContactComponent() {
                         <select
                             id="city"
                             value={selectedCity}
-                            onChange={(e) => setSelectedCity(e.target.value)}
+                            onChange={(e) => 
+                                setSelectedCity(e.target.value)
+                            }
                         >
                             <option value="">Select a City</option>
                             {vietnamCities.map((city, index) => (
@@ -137,11 +191,12 @@ export default function ContactComponent() {
                                 </option>
                             ))}
                         </select>
-                        {isCityEmpty && <div className="error-message">Please select a city</div>}
+                        {selectedCity ==="Select a City" && <div className="error-message">Please select a city</div>}
                     </div>
                     <div className={`district padding-form ${isDistrictEmpty ? "error" : ""}`}>
                         <input
                             type="text"
+                            onChange={handleDistrictChange}
                             placeholder="District"
                         />
                         {isDistrictEmpty && <div className="error-message">District is required</div>}
@@ -149,6 +204,7 @@ export default function ContactComponent() {
                     <div className={`apartment padding-form ${isApartmentEmpty ? "error" : ""}`}>
                         <input
                             type="text"
+                            onChange={handelApartmentChange}
                             placeholder="Apartment"
                         />
                         {isApartmentEmpty && <div className="error-message">Apartment is required</div>}
