@@ -15,15 +15,9 @@ router.delete("/:id", _delete);
 module.exports = router;
 
 const schemaShoes = Joi.object({
-  // BrandID: Joi.number().integer().required(),
-  // ServiceID: Joi.number().integer().required(),
-  // DesignID: Joi.number().integer().required(),
+  BrandID: Joi.number().integer().required(),
   Name: Joi.string().required(),
-  // Model: Joi.string().required(),
   Price: Joi.number().integer().required(),
-  // Colour: Joi.string().required(),
-  // Material: Joi.string().required(),
-  // Size: Joi.number().integer().required(),
   Description: Joi.string().required(),
   URL: Joi.string().required(),
 });

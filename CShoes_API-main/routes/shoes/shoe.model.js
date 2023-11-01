@@ -9,7 +9,7 @@ function model(sequelize) {
       autoIncrement: true,
       primaryKey: true,
     },
-    // BrandID: { type: DataTypes.INTEGER, allowNull: false },
+    BrandID: { type: DataTypes.INTEGER },
     // ServiceID: { type: DataTypes.INTEGER, allowNull: false },
     // DesignID: { type: DataTypes.INTEGER, allowNull: false },
 
@@ -28,5 +28,6 @@ function model(sequelize) {
     scopes: {},
   };
 
-  return sequelize.define("Shoes", attributes, options);
+  const shoes = sequelize.define("Shoes", attributes, options);
+  return shoes;
 }

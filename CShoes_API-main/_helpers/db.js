@@ -19,6 +19,7 @@ async function initialize() {
   const sequelize = new Sequelize(dbName, userName, password, {
     host,
     dialect,
+    logging: false,
     define: {
       timestamps: false,
     },
@@ -30,10 +31,18 @@ async function initialize() {
   db.Design = require("../routes/designs/design.model")(sequelize);
   db.Users = require("../routes/users/user")(sequelize);
   db.Roles = require("../routes/roles/roles")(sequelize);
+  db.Orders = require("../routes/orders/orders.model")(sequelize);
+  db.OrderDetails = require("../routes/orders/order_details.model")(sequelize);
+  db.Brands = require("../routes/brands/brands.model")(sequelize);
 
   // Users 1 - 1 Roles
   db.Users.belongsTo(db.Roles, {
     foreignKey: "RoleID",
+  });
+
+  // Shoes 1 - 1 Brands
+  db.Shoe.belongsTo(db.Brands, {
+    foreignKey: "BrandID",
   });
 
   // sync all models with database
