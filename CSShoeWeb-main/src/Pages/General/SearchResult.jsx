@@ -34,7 +34,7 @@ function SearchResult() {
     Swal.fire({
       title: 'Added To Cart Successfully',
       icon: 'success',
-  });
+    });
   };
 
   return (

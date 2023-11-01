@@ -10,14 +10,16 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "./SearchBar";
 import { UserContext } from "../../context/user-context";
+import { useSelector } from "react-redux";
 
 export default function () {
   const { user } = React.useContext(UserContext);
   const navigate = useNavigate();
   const { Search } = Input;
   const onSearch = (value, _e, info) => console.log(info?.source, value)
+  const currentUser = useSelector((state)=> state.user.currentUser)
   const handleClick = () => {
-    if (user) {
+    if (currentUser.token) {
       navigate('/Account')
     } else {
       navigate('/Login')

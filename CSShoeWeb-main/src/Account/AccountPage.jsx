@@ -6,11 +6,16 @@ import { loginUser } from "../Pages/Login/api";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Accountdetail from "./Accountdetail";
+import { clearUser } from "../redux/slice/userSlice";
+import { useDispatch } from "react-redux";
+
 function AccountPage() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const handleLogout = () => {
     setUser(null); //clear user tu context
+    dispatch(clearUser())
     navigate("/Login");
   };
   return (

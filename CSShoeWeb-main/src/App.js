@@ -31,47 +31,51 @@ import Search from 'antd/es/input/Search';
 import AdminDashBoard from './Pages/AdminPage/Admin'
 import { UserContext } from './context/user-context';
 import AccountPage from './Account/AccountPage';
+import AdminProduct from './Pages/AdminPage/AdminProduct';
+import AdminProductEdit from './Pages/AdminPage/AdminProductEdit';
 function App() {
   const [user, setUser] = React.useState(null);
   return (
     <div className="App">
-    <UserContext.Provider value={{ user,setUser }}>
-    <ShopContextProvider>
-      <div className='header'>
-     <Navshoes/>
-     </div>
-     <div className='Body-main'>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/Login' element={<LoginPage />} />
-        <Route path='/shop' element={<Shop />} />
-        <Route path='/CartContent' element={<Cart/>} />
-        <Route path='/product-detail/:id' element={<ProductDetail/>}></Route>
-        <Route path='/blog-detail/:id' element={<BlogDetail/>}></Route>
-        <Route path='/forgot' element={<ForgotPassword/>}></Route>
-        <Route path='/about' element={<AboutUs/>}></Route>
-        <Route path='/contact' element={<Contact/>}></Route>
-        <Route path='/payment' element={<PaymentPage/>}></Route>
-        <Route path='/sizeguide' element={<SizeContent/>}></Route>
-        <Route path="/search/:query" element={<SearchResult/>} />  
-        <Route path='/privacy-policy' element={<PrivacyPolicy/>} />
-        <Route path='/shipment' element={<Shipment/>} />
-        <Route path='/return-policy' element={<ReturnPolicy/>} />
-        <Route path='/payment-detail' element={<PaymentDetail/>} />
-        <Route path='/term-and-conditions' element={<TermAndCondition/>} />
-        <Route path='/question-anwser' element={<QuestionAnwser/>} />
-        <Route path='/create' element={<CreateAccountpage/>} />
-        <Route path='/createyourown' element={<CreateYourOwnPage/>} />
-        <Route path='/blogs' element={<Blogs/>} /> 
-        <Route path='/admin' element={<AdminDashBoard/>} /> 
-        <Route path='/Account' element={<AccountPage/>} />
-      </Routes>
-      </div>
-      <div className='Footer-main'>
-      <Footer />
-      </div>
-    </ShopContextProvider>
-    </UserContext.Provider>
+      <UserContext.Provider value={{ user, setUser }}>
+        <ShopContextProvider>
+          <div className='header'>
+            <Navshoes />
+          </div>
+          <div className='Body-main'>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='/Login' element={<LoginPage />} />
+              <Route path='/shop' element={<Shop />} />
+              <Route path='/CartContent' element={<Cart />} />
+              <Route path='/product-detail/:id' element={<ProductDetail />}></Route>
+              <Route path='/blog-detail/:id' element={<BlogDetail />}></Route>
+              <Route path='/forgot' element={<ForgotPassword />}></Route>
+              <Route path='/about' element={<AboutUs />}></Route>
+              <Route path='/contact' element={<Contact />}></Route>
+              <Route path='/payment' element={<PaymentPage />}></Route>
+              <Route path='/sizeguide' element={<SizeContent />}></Route>
+              <Route path="/search/:query" element={<SearchResult />} />
+              <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+              <Route path='/shipment' element={<Shipment />} />
+              <Route path='/return-policy' element={<ReturnPolicy />} />
+              <Route path='/payment-detail' element={<PaymentDetail />} />
+              <Route path='/term-and-conditions' element={<TermAndCondition />} />
+              <Route path='/question-anwser' element={<QuestionAnwser />} />
+              <Route path='/create' element={<CreateAccountpage />} />
+              <Route path='/createyourown' element={<CreateYourOwnPage />} />
+              <Route path='/blogs' element={<Blogs />} />
+              <Route path='/Account' element={<AccountPage />} />
+              <Route path='/admin' element={<AdminDashBoard />} />
+              <Route path='/admin/product' element={<AdminProduct/>} />
+              <Route path='/admin/product/:id' element={<AdminProductEdit/>}></Route>
+            </Routes>
+          </div>
+          <div className='Footer-main'>
+            <Footer />
+          </div>
+        </ShopContextProvider>
+      </UserContext.Provider>
     </div>
   );
 }
