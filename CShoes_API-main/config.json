@@ -1,18 +1,18 @@
 ﻿{
-    "dbName": "ShoeStylizeDemo",
-    "dbConfig": {
-        "server": "localhost",
-        "options": {
-            "port": 1433,
-            "trustServerCertificate": true
-        },
-        "authentication": {
-            "type": "default",
-            "options": {
-                "userName": "sa",
-                "password": "12345"
-            }
-        }
+  "dbName": "ShoeStylizeDemo",
+  "dbConfig": {
+    "server": "localhost",
+    "options": {
+      "port": 1433,
+      "trustServerCertificate": true
     },
-    "secret": "S0fuNNylma0Lrati0Seethecope"
+    "authentication": {
+      "type": "default",
+      "options": {
+        "userName": "ducanh",
+        "password": "ducanh235"
+      }
+    }
+  },
+  "secret": "S0fuNNylma0Lrati0Seethecope"
 }
