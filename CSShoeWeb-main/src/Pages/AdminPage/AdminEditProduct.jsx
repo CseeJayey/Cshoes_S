@@ -6,20 +6,29 @@ import { ShopContext } from '../../context/shop-context';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import API from '../../config/api';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 
 const AdminEditProduct = () => {
     const [shoes, setShoes] = useState(null);
     const [file, setFile] = useState(null)
     const [listBrand, setListBrand] = useState([])
+    const [name, setName] = useState("")
+    const [price, setPrice] = useState("")
+    const [brand, setBrand] = useState("")
+    const [urlImg, setUrlImg] = useState("")
+    const [loading, setLoading] = useState(false)
 
     const param = useParams();
 
     useEffect(() => {
-        console.log(param.id);
         const getProduct = async () => {
             try {
                 const res = await API.getProductById(param.id)
+                setName(res.data.name)
+                setPrice(res.data.price)
+                setBrand(res.data.brand.BrandID)
+                setUrlImg(res.data.urlImg)
                 setShoes(res.data)
             } catch (err) {
 
@@ -67,17 +76,51 @@ const AdminEditProduct = () => {
             return null
         }
     }
+    const showMessageError = (message) => {
+        Swal.fire({
+            title: message,
+            icon: 'error',
+        });
+    };
 
-    const handleSubmit = async()=>{
-        console.log(shoes);
+    const handleSubmit = async () => {
+        if (!name || !price) {
+            showMessageError("Vui lòng điền đầy đủ thông tin")
+            return
+        }
+        setLoading(true)
+        let url = urlImg
+        if(file){
+            const resUpload = await getUrlImg()
+            url = resUpload.data.display_url
+        }
+        const data = {
+            Name: name,
+            Price: Number(price),
+            BrandID: Number(brand),
+            URL: url,
+            Description: "Edit shoes"
+        }
+        console.log(data);
+        try {
+            const res = await API.updateProduct(param.id, data)
+            Swal.fire({
+                title: res.data.message,
+                icon: 'success',
+            });
+        } catch (err) {
+            showMessageError(err.response.data.message)
+        }
+        setLoading(false)
     }
 
-    const findBrandId = (name)=>{
-        for(let i=0;i<listBrand.length;i++){
-            if(listBrand[i].Name == name){
+    const findBrandId = (name) => {
+        for (let i = 0; i < listBrand.length; i++) {
+            if (listBrand[i].Name == name) {
                 return listBrand[i].BrandID
             }
         }
+        return null
     }
 
     return (
@@ -92,7 +135,7 @@ const AdminEditProduct = () => {
                             <div>
                                 <input type="file" onChange={handleFileChange} />
                                 <div className='mt-3'>
-                                    <img src={file ? URL.createObjectURL(file) : shoes.urlImg} alt="Selected" style={{ maxWidth: '100%' }} />
+                                    <img src={file ? URL.createObjectURL(file) : urlImg} alt="Selected" style={{ maxWidth: '100%' }} />
                                 </div>
                             </div>
                         </div>
@@ -105,12 +148,12 @@ const AdminEditProduct = () => {
                                     Tên sản phẩm:
                                 </label>
                                 <br />
-                                <input className='productName mb-3' value={shoes.name} onChange={(e) => setShoes({ ...shoes, name: e.target.value })} type="text" placeholder='Tên sản phẩm' />
+                                <input className='productName mb-3' value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder='Tên sản phẩm' />
                                 <label style={{ fontFamily: 'Karla, sans-serif' }}>
                                     Giá:
                                 </label>
                                 <br />
-                                <input value={shoes.price} onChange={(e) => setShoes({ ...shoes, price: e.target.value })} type="number" placeholder='Giá' />
+                                <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder='Giá' />
                             </div>
 
                             <form className='payment-form'>
@@ -120,7 +163,8 @@ const AdminEditProduct = () => {
                                     </label>
                                     <br />
                                     <select
-                                        value={findBrandId(shoes.brand)}
+                                        value={brand}
+                                        onChange={(e) => setBrand(e.target.value)}
                                         className='w-1/5'
                                         style={{ fontFamily: 'Karla, sans-serif' }}
                                     >
@@ -135,12 +179,15 @@ const AdminEditProduct = () => {
 
                             <div className='purchase-action'>
                                 <div className='addCartBtn'>
-                                    <button onClick={handleSubmit} className='rounded px-4 py-2 bg-blue-500'>Save</button>
+                                    {
+                                        loading ? <button disabled className='rounded px-4 py-2 bg-blue-300 opacity-50'>Save</button>
+                                            : <button onClick={handleSubmit} className='rounded px-4 py-2 bg-blue-500'>Save</button>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
             ) : (
                 <p>Loading...</p>
             )

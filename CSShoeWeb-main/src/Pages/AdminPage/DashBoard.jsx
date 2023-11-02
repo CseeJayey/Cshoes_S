@@ -78,7 +78,7 @@ export default function DashBoard() {
                                 <div>{shoes.price.toLocaleString() + ' VND'}</div>
                             </div>
                             <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
-                                <div>{shoes.brand}</div>
+                                <div>{shoes.brand.Name}</div>
                             </div>
                             <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
                                 <Link to={`/admin/product/${shoes.id}`} className='px-3 py-1 rounded bg-green-500'>Edit</Link>
