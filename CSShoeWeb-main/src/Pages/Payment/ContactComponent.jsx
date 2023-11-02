@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import vietnamCities from './vietnamCities ';
 import './ContactComponent.css';
 import { Link } from 'react-router-dom';
+import { image_qr } from '../../config/qrImage';
 
 export default function ContactComponent() {
     const [phone, setPhone] = useState("");
@@ -20,7 +21,8 @@ export default function ContactComponent() {
     const [isDistrictEmpty, setDistrictEmpty] = useState(false);
     const [isApartmentEmpty, setApartmentEmpty] = useState(false);
     const [isCityEmpty, setSelectedCityEmpty] = useState(false);
-
+    const [error, setError] = useState(true)
+    const showModal = false;
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
@@ -31,15 +33,14 @@ export default function ContactComponent() {
         const value = e.target.value;
         setPhone(value);
         // console.log(value.length);
-        if(value.length <10 || value.length >11 || value % 1 !== 0)
-        {
+        if (value.length < 10 || value.length > 11 || value % 1 !== 0) {
             setPhoneValid(false);
         }
         else setPhoneValid(true)
     };
 
     const handleFormSubmit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         const hasError = validateFields();
         if (!hasError) {
 
@@ -49,8 +50,7 @@ export default function ContactComponent() {
     const handleFirstNameChange = (e) => {
         e.preventDefault(e.target.value);
         setFirstName(e.target.value);
-        if(e.target.value !== "")
-        {
+        if (e.target.value !== "") {
             setFirstNameEmpty(false);
         }
         else
@@ -60,19 +60,17 @@ export default function ContactComponent() {
     const handleLastNameChange = (e) => {
         e.preventDefault(e.target.value);
         setLastName(e.target.value);
-        if(e.target.value !== "")
-        {
+        if (e.target.value !== "") {
             setLastNameEmpty(false);
         }
         else
             setLastNameEmpty(true)
     }
 
-    const handleDistrictChange = (e) =>{
+    const handleDistrictChange = (e) => {
         e.preventDefault(e.target.value);
         setDistrict(e.target.value);
-        if(e.target.value !== "")
-        {
+        if (e.target.value !== "") {
             setDistrictEmpty(false);
         }
         else
@@ -82,15 +80,15 @@ export default function ContactComponent() {
     const handelApartmentChange = (e) => {
         e.preventDefault(e.target.value);
         setApartment(e.target.value);
-        if(e.target.value !== "")
-        {
+        if (e.target.value !== "") {
             setApartmentEmpty(false);
         }
         else
-        setApartmentEmpty(true)
+            setApartmentEmpty(true)
     }
 
     const validateFields = () => {
+        
         let hasError = false;
 
         if (email === "") {
@@ -98,7 +96,7 @@ export default function ContactComponent() {
             hasError = true;
         }
 
-        if (phone === "" || (phone.length <10 || phone.length >11 || phone % 1 !== 0)) {
+        if (phone === "" || (phone.length < 10 || phone.length > 11 || phone % 1 !== 0)) {
             console.log(phone.length);
             setPhoneValid(true);
             hasError = true;
@@ -109,27 +107,33 @@ export default function ContactComponent() {
             hasError = true;
         }
 
-        if (firstName === "" ) {
+        if (firstName === "") {
             setFirstNameEmpty(true);
             hasError = true;
         }
 
-        if (lastName === "" ) {
+        if (lastName === "") {
             setLastNameEmpty(true);
             hasError = true;
         }
 
-        if (district === "" || apartment === "") {
+        if (district === "" ) {
             setDistrictEmpty(true);
+            hasError = true;
+        }
+
+        if(apartment === "") {
             setApartmentEmpty(true);
             hasError = true;
         }
+        setError(hasError);
 
         return hasError;
     };
 
     return (
         <div className='contact-infor'>
+
             <div className='contact'>
                 <h1>Contact</h1>
                 <div className={`email padding-form ${!isEmailValid ? "error" : ""}`}>
@@ -180,7 +184,7 @@ export default function ContactComponent() {
                         <select
                             id="city"
                             value={selectedCity}
-                            onChange={(e) => 
+                            onChange={(e) =>
                                 setSelectedCity(e.target.value)
                             }
                         >
@@ -191,7 +195,7 @@ export default function ContactComponent() {
                                 </option>
                             ))}
                         </select>
-                        {selectedCity ==="Select a City" && <div className="error-message">Please select a city</div>}
+                        {selectedCity === "Select a City" && <div className="error-message">Please select a city</div>}
                     </div>
                     <div className={`district padding-form ${isDistrictEmpty ? "error" : ""}`}>
                         <input
@@ -223,12 +227,39 @@ export default function ContactComponent() {
                 </div>
 
                 <div className='submit-btn'>
-                    <button type="submit" onClick={handleFormSubmit}>
+                    <button
+                        type="submit"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        onClick={handleFormSubmit}
+                    >
                         Submit
+                        {/* {console.log(error)} */}
                     </button>
+
+                </div>
+            </div>  
+            <div style={error ? { display: "none", visibility: "hidden", height: 0 }: {}}>
+                <div class='modal fade' id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden='true'>
+                    <div class="modal-dialog d-flex align-items-center justify-content-center">
+                        <div class="modal-content d-flex align-items-center justify-content-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Vui lòng thanh toán</h5>
+                                <button type="button"  onClick={() => {setError(true)}} class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src={image_qr.baseURL} alt="" />
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning btn btn-outline-danger" data-bs-dismiss="modal" onClick={() => {setError(true)}}>Close</button>
+                                <button type="button" class="btn btn-primary btn btn-outline-success" data-bs-dismiss="modal" onClick={() => {setError(true)}}>Payment confirmed</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            {!error ? <div class="modal-backdrop fade show" style={{display: 'block'}}></div> : ''}
         </div>
     );
 }
