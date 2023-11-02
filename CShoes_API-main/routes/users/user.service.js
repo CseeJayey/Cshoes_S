@@ -38,7 +38,7 @@ async function getById(id) {
 
 async function create(params) {
   // validate
-  if (await db.User.findOne({ where: { Username: params.Username } })) {
+  if (await db.Users.findOne({ where: { Username: params.Username } })) {
     throw 'Username "' + params.Username + '" is already taken';
   }
 
@@ -49,7 +49,7 @@ async function create(params) {
   }
 
   // save user
-  await db.User.create(params);
+  await db.Users.create(params);
 }
 
 async function update(id, params) {
@@ -57,7 +57,7 @@ async function update(id, params) {
 
   // validate
   const usernameChanged = params.Username && user.Username !== params.Username;
-  if (usernameChanged && (await db.User.findOne({ where: { Username: params.Username } }))) {
+  if (usernameChanged && (await db.Users.findOne({ where: { Username: params.Username } }))) {
     throw 'Username "' + params.Username + '" is already taken';
   }
 
@@ -82,7 +82,7 @@ async function _delete(id) {
 // helper functions
 
 async function getUser(id) {
-  const user = await db.User.findByPk(id);
+  const user = await db.Users.findByPk(id);
   if (!user) throw "User not found";
   return user;
 }

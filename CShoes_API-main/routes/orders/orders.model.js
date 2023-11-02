@@ -12,17 +12,35 @@ function model(sequelize) {
     UserID: {
       type: DataTypes.INTEGER,
     },
-    shipping_address: {
+    email: {
       type: DataTypes.STRING,
     },
-    shipping_date: {
-      type: DataTypes.DATE,
+    phone: {
+      type: DataTypes.STRING,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+    },
+    city: {
+      type: DataTypes.STRING,
+    },
+    district: {
+      type: DataTypes.STRING,
+    },
+    apartment: {
+      type: DataTypes.STRING,
     },
     shipping_status: {
       type: DataTypes.INTEGER,
     },
+    total_price: {
+      type: DataTypes.INTEGER,
+    },
     created_at: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE(6),
     },
   };
   return sequelize.define("Orders", attributes);
