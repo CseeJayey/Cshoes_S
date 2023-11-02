@@ -12,19 +12,23 @@ const mapShoesToJson = data => {
   return {
     id: data.ShoeID,
     price: data.Price,
-    name: data.Name,
-    brand: data?.Brand.Name,
+    name: data?.Name,
+    brand: data?.Brand,
+    urlImg: data?.URL,
   };
 };
 
 async function getAll() {
-  const data = await db.Shoe.findAll();
-  const res = data.map(item => mapShoesToJson(item));
+  const data = await db.Shoe.findAll({ include: db.Brands });
+  const res = data.map(item => {
+    return mapShoesToJson(item.get());
+  });
   return res;
 }
 
 async function getById(id) {
-  return await getShoe(id);
+  const res = await getShoe(id);
+  return mapShoesToJson(res.get());
 }
 
 async function create(params) {
@@ -33,11 +37,9 @@ async function create(params) {
 
 async function update(id, params) {
   const shoe = await getShoe(id);
-
   Object.assign(shoe, params);
   await shoe.save();
-
-  return shoe.get();
+  return mapShoesToJson(shoe.get());
 }
 
 async function _delete(id) {
@@ -48,5 +50,5 @@ async function _delete(id) {
 async function getShoe(id) {
   const shoe = await db.Shoe.findOne({ where: { ShoeID: id }, include: db.Brands });
   if (!shoe) throw "Shoe not found";
-  return mapShoesToJson(shoe);
+  return shoe;
 }
