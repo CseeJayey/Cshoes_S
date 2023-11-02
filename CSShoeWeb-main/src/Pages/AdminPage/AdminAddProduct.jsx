@@ -5,6 +5,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import API from '../../config/api';
+import products from '../Shop/ProductList';
 
 const AdminAddProduct = () => {
     const [file, setFile] = useState(null)
@@ -14,17 +15,17 @@ const AdminAddProduct = () => {
     const [loading, setLoading] = useState(false)
     const [listBrand, setListBrand] = useState([])
 
-    useEffect(()=>{
-        const getBrand = async()=>{
-            try{
+    useEffect(() => {
+        const getBrand = async () => {
+            try {
                 const res = await API.getBrand()
                 setListBrand(res.data)
-            }catch(err){
-                
+            } catch (err) {
+
             }
         }
         getBrand()
-    },[])
+    }, [])
 
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
@@ -54,6 +55,45 @@ const AdminAddProduct = () => {
         }
 
     }
+    const getUrlImgWithUrl = async (url) => {
+        const formData = new FormData();
+        formData.append("image", url);
+        try {
+            const res = await axios.post("https://api.imgbb.com/1/upload?key=a83bb7b270c95fd8a078837a2d919593", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            return res.data
+        } catch (err) {
+            return null
+        }
+
+    }
+
+    const importData = async () => {
+        setLoading(true)
+        for (let i = 0; i < products.length; i++) {
+            const resUpload = await getUrlImgWithUrl(products[i].imgUrl)
+            if (!resUpload) {
+                continue
+            }
+            const data = {
+                Name: products[i].name,
+                Price: products[i].price,
+                BrandID: Math.ceil(Math.random() * 3),
+                URL: resUpload.data.display_url,
+                Description: "create shoes"
+            }
+            try {
+                const res = await API.addProduct(data)
+                console.log(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        setLoading(false)
+    }
 
     const handelSubmit = async () => {
         if (!file) {
@@ -73,7 +113,7 @@ const AdminAddProduct = () => {
             URL: resUpload.data.display_url,
             Description: "create shoes"
         }
-        try{
+        try {
             const res = await API.addProduct(data)
             Swal.fire({
                 title: res.data.message,
@@ -81,7 +121,7 @@ const AdminAddProduct = () => {
             });
             setName("")
             setPrice("")
-        }catch(err){
+        } catch (err) {
             showMessageError(err.response.data.message)
         }
         setLoading(false)
@@ -157,7 +197,7 @@ const AdminAddProduct = () => {
                                             style={{ fontFamily: 'Karla, sans-serif' }}
                                         >
                                             {
-                                                listBrand.map((item, index)=>(
+                                                listBrand.map((item, index) => (
                                                     <option key={index} value={item.BrandID}>{item.Name}</option>
                                                 ))
                                             }

@@ -6,7 +6,8 @@ const API = {
     getBrand: async () => await http.get("/brands"),
     getListProduct: async () => await http.get("/shoes"),
     deleteProduct: async (id) => await http.delete(`/shoes/${id}`),
-    getProductById: async (id) => await http.get(`/shoes/${id}`)
+    getProductById: async (id) => await http.get(`/shoes/${id}`),
+    updateProduct: async (id, data) => await http.put(`/shoes/${id}`, data)
 }
 
 export default API
