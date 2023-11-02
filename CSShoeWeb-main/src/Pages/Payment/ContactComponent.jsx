@@ -22,7 +22,7 @@ export default function ContactComponent() {
     const [isApartmentEmpty, setApartmentEmpty] = useState(false);
     const [isCityEmpty, setSelectedCityEmpty] = useState(false);
     const [error, setError] = useState(true)
-
+    const showModal = false;
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
@@ -88,6 +88,7 @@ export default function ContactComponent() {
     }
 
     const validateFields = () => {
+        
         let hasError = false;
 
         if (email === "") {
@@ -228,9 +229,9 @@ export default function ContactComponent() {
                 <div className='submit-btn'>
                     <button
                         type="submit"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
                         onClick={handleFormSubmit}
-                        data-bs-toggle={!error ? "modal" : undefined}
-                        data-bs-target={!error ? "#exampleModal" : undefined}
                     >
                         Submit
                         {/* {console.log(error)} */}
@@ -238,28 +239,27 @@ export default function ContactComponent() {
 
                 </div>
             </div>  
-            {console.log(error)}                     
-            {
-                !error &&
-                <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div style={error ? { display: "none", visibility: "hidden", height: 0 }: {}}>
+                <div class='modal fade' id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden='true'>
                     <div class="modal-dialog d-flex align-items-center justify-content-center">
                         <div class="modal-content d-flex align-items-center justify-content-center">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Vui lòng thanh toán</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button"  onClick={() => {setError(true)}} class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <img src={image_qr.baseURL} alt="" />
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary btn btn-outline-success" data-bs-dismiss="modal">Payment confirmed</button>
+                                <button type="button" class="btn btn-warning btn btn-outline-danger" data-bs-dismiss="modal" onClick={() => {setError(true)}}>Close</button>
+                                <button type="button" class="btn btn-primary btn btn-outline-success" data-bs-dismiss="modal" onClick={() => {setError(true)}}>Payment confirmed</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+            {!error ? <div class="modal-backdrop fade show" style={{display: 'block'}}></div> : ''}
         </div>
     );
 }
