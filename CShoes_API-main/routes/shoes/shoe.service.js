@@ -37,8 +37,8 @@ async function create(params) {
 
 async function update(id, params) {
   const shoe = await getShoe(id);
-  await shoe.save();
   Object.assign(shoe, params);
+  await shoe.save();
   return mapShoesToJson(shoe.get());
 }
 
