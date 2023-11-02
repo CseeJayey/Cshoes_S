@@ -13,16 +13,15 @@ import { useEffect } from "react";
 
 export default function Content() {
   const { setUser } = React.useContext(UserContext);
-  const currentUser = useSelector((state)=> state.user.currentUser)
+  const currentUser = useSelector((state) => state.user.currentUser)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    console.log(currentUser);
-    if(currentUser.token){
+  useEffect(() => {
+    if (currentUser.token) {
       navigate('/')
     }
-  },[])
+  }, [])
 
   const onFinish = async (values) => {
     const { userName, password } = values
@@ -36,7 +35,12 @@ export default function Content() {
       if (res.data) {
         setUser(data);
         dispatch(setUserRedux(res.data))
-        navigate('/');
+        if (res.data.isAdmin) {
+          navigate('/admin');
+        }
+        else {
+          navigate('/');
+        }
         message.success(`Welcome, ${res.data.Username}`, 3);
       } else {
         console.error('Invalid username or password');
