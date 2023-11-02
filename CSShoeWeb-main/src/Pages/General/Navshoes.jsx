@@ -17,7 +17,8 @@ export default function () {
   const navigate = useNavigate();
   const { Search } = Input;
   const onSearch = (value, _e, info) => console.log(info?.source, value)
-  const currentUser = useSelector((state)=> state.user.currentUser)
+  const currentUser = useSelector((state) => state.user.currentUser)
+
   const handleClick = () => {
     if (currentUser.token) {
       navigate('/Account')
@@ -33,21 +34,21 @@ export default function () {
           <img src="/Img/logo6.png" />
         </Link>
         <div className="Navbarbottom">
-        <ul className="menu">
-          <li>
-            <Link
-              className="link-nav"
-              to="/"
-              style={{ textDecoration: "none", color: "#dbdbdb" }}
-            >
-              Home
-            </Link>
-          </li>
+          <ul className="menu">
+            <li>
+              <Link
+                className="link-nav"
+                to="/"
+                style={{ textDecoration: "none", color: "#dbdbdb" }}
+              >
+                Home
+              </Link>
+            </li>
 
-          <li>
-            <Space direction="vertical">
-              <Space wrap>
-                
+            <li>
+              <Space direction="vertical">
+                <Space wrap>
+
                   <Link
                     className="link-nav"
                     to="/shop"
@@ -55,61 +56,73 @@ export default function () {
                   >
                     Shop
                   </Link>
-                
-              </Space>
-            </Space>
-          </li>
 
-          <li>
-            <Link
-              className="link-nav"
-              to="/createyourown"
-              style={{ textDecoration: "none", color: "#dbdbdb" }}
-            >
-              Create Your Own
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="link-nav"
-              to="/about"
-              style={{ textDecoration: "none", color: "#dbdbdb" }}
-            >
-              About Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="link-nav"
-              to="/contact"
-              style={{ textDecoration: "none", color: "#dbdbdb" }}
-            >
-              Contact
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="link-nav"
-              to="/sizeguide"
-              style={{ textDecoration: "none", color: "#dbdbdb" }}
-            >
-              Size Guide
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="link-nav"
-              to="/blogs"
-              style={{ textDecoration: "none", color:'#dbdbdb' }}
-            >
-              Blog
-            </Link>
-          </li>
-        </ul>
+                </Space>
+              </Space>
+            </li>
+
+            <li>
+              <Link
+                className="link-nav"
+                to="/createyourown"
+                style={{ textDecoration: "none", color: "#dbdbdb" }}
+              >
+                Create Your Own
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="link-nav"
+                to="/about"
+                style={{ textDecoration: "none", color: "#dbdbdb" }}
+              >
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="link-nav"
+                to="/contact"
+                style={{ textDecoration: "none", color: "#dbdbdb" }}
+              >
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="link-nav"
+                to="/sizeguide"
+                style={{ textDecoration: "none", color: "#dbdbdb" }}
+              >
+                Size Guide
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="link-nav"
+                to="/blogs"
+                style={{ textDecoration: "none", color: '#dbdbdb' }}
+              >
+                Blog
+              </Link>
+            </li>
+            {
+              currentUser.isAdmin ? <li>
+                <Link
+                  className="link-nav"
+                  to="/admin"
+                  style={{ textDecoration: "none", color: '#dbdbdb' }}
+                >
+                  Admin
+                </Link>
+              </li>
+                : <></>
+            }
+          </ul>
         </div>
         <div className="search-cart-nav">
           <div className="search-bars">
-            <SearchBar/>
+            <SearchBar />
           </div>
           <button className="shopping-cart" type="submit">
             <Link to="/CartContent">
