@@ -105,7 +105,7 @@ const AdminEditProduct = () => {
         try {
             const res = await API.updateProduct(param.id, data)
             Swal.fire({
-                title: res.data.message,
+                title: "Lưu thành công",
                 icon: 'success',
             });
         } catch (err) {
