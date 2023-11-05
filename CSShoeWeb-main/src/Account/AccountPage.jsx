@@ -35,7 +35,7 @@ function AccountPage() {
             <Link to={"#addressship"}>Address detail</Link>
           </li>
           <li className="account-detail">
-            <Link to={"#purchasehistory"}>Purchase History</Link>
+            <Link to={"/Account/purchase-history"}>Purchase History</Link>
           </li>
         </ul>
         <button onClick={handleLogout}>Logout</button>

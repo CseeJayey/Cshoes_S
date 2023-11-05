@@ -35,6 +35,7 @@ import AdminProduct from './Pages/AdminPage/AdminProduct';
 import { ToastContainer } from 'react-toastify';
 import AdminAddProduct from './Pages/AdminPage/AdminAddProduct';
 import AdminEditProduct from './Pages/AdminPage/AdminEditProduct';
+// import PurchaseHistory from './Account/PurchaseHistory';
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -73,6 +74,7 @@ function App() {
               <Route path='/admin/product' element={<AdminProduct/>} />
               <Route path='/admin/product/:id' element={<AdminEditProduct/>}></Route>
               <Route path='/admin/add-product' element={<AdminAddProduct/>}></Route>
+              {/* <Route path='/account/purchase-history' element={<PurchaseHistory/>}></Route> */}
             </Routes>
           </div>
           <div className='Footer-main'>
