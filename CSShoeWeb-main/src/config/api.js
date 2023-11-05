@@ -10,6 +10,10 @@ const API = {
     updateProduct: async (id, data) => await http.put(`/shoes/${id}`, data),
 
     createOrder : async (data,token) => await http.post("/orders/create",data,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }),
 
     getAllPayment: async () => await http.get("/orders/admin/get-all"),
     updatePayment: async (data) => await http.post("/orders/admin/update-status", data),
@@ -26,7 +30,7 @@ const API = {
             Authorization: `Bearer ${token}`
         }
     })
-
+    ,
     deleteBlog: async (id) => await http.delete(`/blogs/${id}`)
 
 }
