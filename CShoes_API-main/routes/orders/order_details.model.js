@@ -16,7 +16,7 @@ function model(sequelize) {
       type: DataTypes.INTEGER,
     },
     quantity: {
-      type: DataTypes.DATE,
+      type: DataTypes.INTEGER,
     },
     amount: {
       type: DataTypes.INTEGER,

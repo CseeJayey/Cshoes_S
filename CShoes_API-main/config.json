@@ -1,7 +1,7 @@
 ﻿{
   "dbName": "ShoeStylizeDemo",
   "dbConfig": {
-    "server": "localhost",
+    "server": "103.252.95.181",
     "options": {
       "port": 1433,
       "trustServerCertificate": true
@@ -9,8 +9,8 @@
     "authentication": {
       "type": "default",
       "options": {
-        "userName": "ducanh",
-        "password": "ducanh235"
+        "userName": "sa",
+        "password": "123456aA"
       }
     }
   },

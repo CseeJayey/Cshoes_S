@@ -14,6 +14,7 @@ app.use("/users", require("./routes/users/users.controller"));
 app.use("/shoes", require("./routes/shoes/shoes.controller"));
 app.use("/orders", require("./routes/orders/orders.controller"));
 app.use("/brands", require("./routes/brands/brands.controller"));
+app.use("/blogs", require("./routes/blog/blog.controller"));
 // app.use("/admins", require("./routes/admins/admins.controller "));
 
 // // global error handler
