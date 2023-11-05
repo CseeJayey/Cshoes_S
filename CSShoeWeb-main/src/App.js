@@ -31,10 +31,12 @@ import Search from 'antd/es/input/Search';
 import AdminDashBoard from './Pages/AdminPage/Admin'
 import { UserContext } from './context/user-context';
 import AccountPage from './Account/AccountPage';
-import AdminProduct from './Pages/AdminPage/AdminProduct';
 import { ToastContainer } from 'react-toastify';
 import AdminAddProduct from './Pages/AdminPage/AdminAddProduct';
 import AdminEditProduct from './Pages/AdminPage/AdminEditProduct';
+import AdminPayment from './Pages/AdminPage/AdminPayment';
+import AdminBlog from './Pages/AdminPage/AdminBlog';
+import AdminAddBlog from './Pages/AdminPage/AdminAddBlog';
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -70,9 +72,11 @@ function App() {
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/Account' element={<AccountPage />} />
               <Route path='/admin' element={<AdminDashBoard />} />
-              <Route path='/admin/product' element={<AdminProduct/>} />
               <Route path='/admin/product/:id' element={<AdminEditProduct/>}></Route>
               <Route path='/admin/add-product' element={<AdminAddProduct/>}></Route>
+              <Route path='/admin/payment' element={<AdminPayment/> }></Route>
+              <Route path='/admin/blog' element={<AdminBlog/> }></Route>
+              <Route path='/admin/add-blog' element={<AdminAddBlog/> }></Route>
             </Routes>
           </div>
           <div className='Footer-main'>
