@@ -9,7 +9,9 @@ const authorize = require("../../_middleware/authorize");
 // routes
 router.post("/create", authorize, create);
 router.get("/", get);
-router.delete("/", remove);
+router.get("/:id", getById);
+
+router.delete("/:id", remove);
 module.exports = router;
 
 // const schemaBlog = Joi.object({
@@ -34,8 +36,16 @@ function get(req, res, next) {
 }
 
 function remove(req, res, next) {
+  const id = req.params.id;
   blogService
-    .remove(req.body.id)
+    .remove(id)
     .then(data => res.json(data))
+    .catch(next);
+}
+
+function getById(req, res, next) {
+  blogService
+    .getById(req.params.id)
+    .then(obj => res.json(obj))
     .catch(next);
 }

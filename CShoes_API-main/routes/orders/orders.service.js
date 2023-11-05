@@ -49,7 +49,7 @@ const OrdersCreate = async (UserID, body) => {
 const adminUpdateStatus = async body => {
   const { OrderID, status } = body;
   const res = await db.Orders.findByPk(OrderID);
-  res.shipping_status = status;
+  res.payment_status = status;
   await res.save();
   return "Update Orders successfully !!";
 };
@@ -68,9 +68,20 @@ const getOrders = async UserID => {
   return res;
 };
 
+const getOrdersDetail = async UserID => {
+  const res = await db.Orders.findAll({
+    where: {
+      UserID,
+    },
+    include: db.OrderDetails,
+  });
+  return res;
+};
+
 module.exports = {
   OrdersCreate,
   getOrders,
+  getOrdersDetail,
   adminUpdateStatus,
   adminGetAll,
 };

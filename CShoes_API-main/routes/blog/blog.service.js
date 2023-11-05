@@ -4,6 +4,7 @@ module.exports = {
   create,
   get,
   remove,
+  getById,
 };
 
 async function create(authorId, body) {
@@ -26,4 +27,15 @@ async function remove(id) {
     },
   });
   return data;
+}
+
+async function getById(id) {
+  const res = await getBlog(id);
+  return res.get();
+}
+
+async function getBlog(id) {
+  const shoe = await db.Blogs.findOne({ where: { id } });
+  if (!shoe) throw "Blogs not found";
+  return shoe;
 }

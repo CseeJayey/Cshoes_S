@@ -46,8 +46,13 @@ async function initialize() {
     foreignKey: "BrandID",
   });
 
+  // Orders 1 - N OrderDetails
+  db.Orders.hasMany(db.OrderDetails, {
+    foreignKey: "OrderID",
+  });
+
   // sync all models with database
-  // await sequelize.sync({ alter: true });
+  await sequelize.sync({ alter: true });
   // await sequelize.sync({ force: true });
 }
 

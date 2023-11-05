@@ -9,7 +9,7 @@ const authorize = require("../../_middleware/authorize");
 // routes
 router.post("/create", authorize, createOrders);
 router.get("/", authorize, getOrders);
-
+router.get("/:id", getOrdersDetail);
 // routes admin
 router.post("/admin/update-status", adminUpdateStatus);
 router.get("/admin/get-all", adminGetAll);
@@ -25,6 +25,13 @@ function createOrders(req, res, next) {
 function getOrders(req, res, next) {
   const UserID = req.body.UserID;
   OrderService.getOrders(UserID)
+    .then(data => res.json(data))
+    .catch(next);
+}
+
+function getOrdersDetail(req, res, next) {
+  const id = req.params.id;
+  OrderService.getOrdersDetail(id)
     .then(data => res.json(data))
     .catch(next);
 }

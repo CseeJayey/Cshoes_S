@@ -35,7 +35,6 @@ function model(sequelize) {
     },
     payment_status: {
       type: DataTypes.INTEGER,
-      defaultValue: 0,
       allowNull: false,
     },
     shipping_status: {
