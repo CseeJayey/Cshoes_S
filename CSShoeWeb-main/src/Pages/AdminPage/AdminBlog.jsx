@@ -4,31 +4,34 @@ import products from '../Shop/ProductList'
 import API from '../../config/api'
 import Swal from 'sweetalert2';
 
-export default function DashBoard() {
-    const [listShoe, setListShoe] = useState([])
+const AdminBlog = () => {
+    const [listBlog, setListBlog] = useState([])
     const [render, setRender] = useState(true)
+
     useEffect(() => {
-        const getListShoes = async () => {
+        const getListBlog = async () => {
             try {
-                const res = await API.getListProduct()
-                setListShoe(res.data)
+                const res = await API.getListBlog()
+                setListBlog(res.data)
             } catch (err) {
 
             }
         }
-        getListShoes()
+        getListBlog()
     }, [render])
 
     const handleDelete = async (id) => {
         if (window.confirm("Bạn có chắc chắn muốn xóa không")) {
             try {
-                const res = await API.deleteProduct(id)
+                const res = await API.deleteBlog(id)
                 Swal.fire({
-                    title: res.data.message,
+                    title: "Xóa thành công",
                     icon: 'success',
                 });
+                console.log(res);
                 setRender(!render)
             } catch (err) {
+                console.log(err);
                 Swal.fire({
                     title: err.response.data.message,
                     icon: 'error',
@@ -41,7 +44,7 @@ export default function DashBoard() {
         <div className='flex'>
             <div className='flex flex-col text-xl pt-4 ps-12'>
                 <Link
-                    className='px-1.5 py-0.5 border-b text-blue-500 hover:no-underline'
+                    className='px-1.5 py-0.5 border-b hover:no-underline'
                     to={'/admin'}>
                     Product
                 </Link>
@@ -58,7 +61,7 @@ export default function DashBoard() {
                     Thanh toán
                 </Link>
                 <Link
-                    className='px-1.5 py-0.5 border-b hover:no-underline'
+                    className='px-1.5 py-0.5 border-b text-blue-500 hover:no-underline'
                     to={'/admin/blog'}>
                     Blog
                 </Link>
@@ -72,28 +75,28 @@ export default function DashBoard() {
             </div>
             <div className='flex-1'>
                 {
-                    listShoe.map((shoes, index) => (
+                    listBlog.map((blog, index) => (
                         <div key={index} className='flex justify-center'>
                             <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
-                                <div>{shoes.id}</div>
+                                <div>{blog.id}</div>
                             </div>
                             <div className='w-1/12 py-2 flex items-center border-b-[1px]'>
-                                <img className='w-14 h-14' src={shoes.urlImg} alt={shoes.name} />
+                                <img className='w-14 h-14' src={blog.img} alt={blog.title} />
                             </div>
-                            <div className='w-4/12 flex items-center border-b-[1px]'>
-                                <div>{shoes.name}</div>
+                            <div className='w-2/12 flex items-center border-b-[1px]'>
+                                <div className='line-clamp-2'>{blog.title}</div>
                             </div>
                             <div className='w-1/12 flex items-center border-b-[1px]'>
-                                <div>{shoes.price.toLocaleString() + ' VND'}</div>
+                                <div>{new Date(blog.publishedAt).toLocaleString()}</div>
                             </div>
-                            <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
-                                <div>{shoes.brand.Name}</div>
+                            <div className='w-4/12 flex items-center border-b-[1px] justify-center'>
+                                <div className='line-clamp-2'>{blog.content}</div>
                             </div>
+                            {/* <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
+                                <Link to={`/admin/product/${blog.id}`} className='px-3 py-1 rounded bg-green-500'>Edit</Link>
+                            </div> */}
                             <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
-                                <Link to={`/admin/product/${shoes.id}`} className='px-3 py-1 rounded bg-green-500'>Edit</Link>
-                            </div>
-                            <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
-                                <button onClick={() => handleDelete(shoes.id)} className='px-3 py-1 rounded bg-red-500'>Delete</button>
+                                <button onClick={() => handleDelete(blog.id)} className='px-3 py-1 rounded bg-red-500'>Delete</button>
                             </div>
                         </div>
                     ))
@@ -102,3 +105,5 @@ export default function DashBoard() {
         </div>
     )
 }
+ 
+export default AdminBlog;

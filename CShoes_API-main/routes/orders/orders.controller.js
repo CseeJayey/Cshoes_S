@@ -9,6 +9,8 @@ const authorize = require("../../_middleware/authorize");
 // routes
 router.post("/create", authorize, createOrders);
 router.get("/", authorize, getOrders);
+router.get("/user", authorize, getByUser);
+router.get("/detail/:id", getOrdersDetail);
 
 // routes admin
 router.post("/admin/update-status", adminUpdateStatus);
@@ -29,6 +31,13 @@ function getOrders(req, res, next) {
     .catch(next);
 }
 
+function getOrdersDetail(req, res, next) {
+  const id = req.params.id;
+  OrderService.getOrdersDetail(id)
+    .then(data => res.json(data))
+    .catch(next);
+}
+
 function adminUpdateStatus(req, res, next) {
   const data = {
     OrdersID: 1,
@@ -41,6 +50,13 @@ function adminUpdateStatus(req, res, next) {
 
 function adminGetAll(req, res, next) {
   OrderService.adminGetAll()
+    .then(data => res.json(data))
+    .catch(next);
+}
+
+function getByUser(req, res, next) {
+  const UserID = req.body.UserID;
+  OrderService.getByUser(UserID)
     .then(data => res.json(data))
     .catch(next);
 }

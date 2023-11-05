@@ -26,7 +26,7 @@ async function initialize() {
   });
 
   // init models and add them to the exported db object
-  db.User = require("../routes/users/user.model")(sequelize);
+  // db.User = require("../routes/users/user.model")(sequelize);
   db.Shoe = require("../routes/shoes/shoe.model")(sequelize);
   db.Design = require("../routes/designs/design.model")(sequelize);
   db.Users = require("../routes/users/user")(sequelize);
@@ -34,6 +34,7 @@ async function initialize() {
   db.Orders = require("../routes/orders/orders.model")(sequelize);
   db.OrderDetails = require("../routes/orders/order_details.model")(sequelize);
   db.Brands = require("../routes/brands/brands.model")(sequelize);
+  db.Blogs = require("../routes/blog/blog.model")(sequelize);
 
   // Users 1 - 1 Roles
   db.Users.belongsTo(db.Roles, {
@@ -45,8 +46,14 @@ async function initialize() {
     foreignKey: "BrandID",
   });
 
+  // Orders 1 - N OrderDetails
+  db.Orders.hasMany(db.OrderDetails, {
+    foreignKey: "OrderID",
+  });
+
   // sync all models with database
   await sequelize.sync({ alter: true });
+  // await sequelize.sync({ force: true });
 }
 
 async function ensureDbExists(dbName) {
