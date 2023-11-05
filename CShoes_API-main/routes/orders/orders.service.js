@@ -68,7 +68,13 @@ const getOrders = async UserID => {
   return res;
 };
 
-const getOrdersDetail = async UserID => {
+const getOrdersDetail = async id => {
+  const res = await db.Orders.findByPk(id, { include: db.OrderDetails });
+  return res;
+};
+
+const getByUser = async UserID => {
+  console.log(UserID);
   const res = await db.Orders.findAll({
     where: {
       UserID,
@@ -84,4 +90,5 @@ module.exports = {
   getOrdersDetail,
   adminUpdateStatus,
   adminGetAll,
+  getByUser,
 };

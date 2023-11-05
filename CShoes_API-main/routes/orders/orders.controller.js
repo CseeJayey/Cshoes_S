@@ -9,7 +9,9 @@ const authorize = require("../../_middleware/authorize");
 // routes
 router.post("/create", authorize, createOrders);
 router.get("/", authorize, getOrders);
-router.get("/:id", getOrdersDetail);
+router.get("/user", authorize, getByUser);
+router.get("/detail/:id", getOrdersDetail);
+
 // routes admin
 router.post("/admin/update-status", adminUpdateStatus);
 router.get("/admin/get-all", adminGetAll);
@@ -48,6 +50,13 @@ function adminUpdateStatus(req, res, next) {
 
 function adminGetAll(req, res, next) {
   OrderService.adminGetAll()
+    .then(data => res.json(data))
+    .catch(next);
+}
+
+function getByUser(req, res, next) {
+  const UserID = req.body.UserID;
+  OrderService.getByUser(UserID)
     .then(data => res.json(data))
     .catch(next);
 }
