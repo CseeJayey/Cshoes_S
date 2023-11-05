@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext}  from 'react';
 import vietnamCities from './vietnamCities ';
 import './ContactComponent.css';
 import { Link } from 'react-router-dom';
 import { image_qr } from '../../config/qrImage';
+import { ShopContext } from "../../context/shop-context";
+import { ShopContextAdidas } from '../../context/Shop-context-adidas'
 
 export default function ContactComponent() {
+
+    const { cartItems, getTotalCartAmount } = useContext(ShopContext, ShopContextAdidas)
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
@@ -15,7 +19,7 @@ export default function ContactComponent() {
 
     const [isEmailValid, setEmailValid] = useState(true);
     const [isPhoneValid, setPhoneValid] = useState(true);
-
+    // console.log(cartItems);
     const [isFirstNameEmpty, setFirstNameEmpty] = useState(false);
     const [isLastNameEmpty, setLastNameEmpty] = useState(false);
     const [isDistrictEmpty, setDistrictEmpty] = useState(false);

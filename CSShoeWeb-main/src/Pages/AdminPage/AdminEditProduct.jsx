@@ -133,7 +133,7 @@ const AdminEditProduct = () => {
                     <div className='product-image'>
                         <div>
                             <div>
-                                <input type="file" onChange={handleFileChange} />
+                                <input type="file" accept="image/png, image/gif, image/jpeg" onChange={handleFileChange} />
                                 <div className='mt-3'>
                                     <img src={file ? URL.createObjectURL(file) : urlImg} alt="Selected" style={{ maxWidth: '100%' }} />
                                 </div>
