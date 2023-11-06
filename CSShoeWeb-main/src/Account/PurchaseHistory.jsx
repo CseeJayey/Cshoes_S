@@ -92,8 +92,10 @@ const PurchaseHistory = () => {
                             </div>
                             <div className='w-1/12 mx-2 flex items-center border-b-[1px] justify-center'>
                                 {
+                                    <Link to={`/Account/purchase-history/${payment.OrderID}`} className='px-3 py-1 rounded bg-green-500'>Detail</Link>
                                    
-                                    <button onClick={() => handleSubmit({ OrderID: payment.OrderID, status: 1 })} className='my-2 px-3 py-1 rounded bg-green-500'>Detail</button>
+                                    // <button onClick={() => handleSubmit({ OrderID: payment.OrderID, status: 1 })} className='my-2 px-3 py-1 rounded bg-green-500'>Detail</button>
+                                    
                                 }
                             </div>
                         </div>

@@ -36,6 +36,7 @@ import AdminAddProduct from './Pages/AdminPage/AdminAddProduct';
 import AdminEditProduct from './Pages/AdminPage/AdminEditProduct';
 
 import PurchaseHistory from './Account/PurchaseHistory';
+import PurchaseHistoryDetail from './Account/PurchaseHistoryDetail';
 
 import AdminPayment from './Pages/AdminPage/AdminPayment';
 import AdminBlog from './Pages/AdminPage/AdminBlog';
@@ -79,6 +80,7 @@ function App() {
               <Route path='/admin/add-product' element={<AdminAddProduct/>}></Route>
 
               <Route path='/Account/purchase-history' element={<PurchaseHistory/>}></Route>
+              <Route path='/Account/purchase-history/:id' element={<PurchaseHistoryDetail/>}></Route>
 
               <Route path='/admin/payment' element={<AdminPayment/> }></Route>
               <Route path='/admin/blog' element={<AdminBlog/> }></Route>
