@@ -7,7 +7,32 @@ const API = {
     getListProduct: async () => await http.get("/shoes"),
     deleteProduct: async (id) => await http.delete(`/shoes/${id}`),
     getProductById: async (id) => await http.get(`/shoes/${id}`),
-    updateProduct: async (id, data) => await http.put(`/shoes/${id}`, data)
+    updateProduct: async (id, data) => await http.put(`/shoes/${id}`, data),
+
+    createOrder : async (data,token) => await http.post("/orders/create",data,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }),
+
+    getAllPayment: async () => await http.get("/orders/admin/get-all"),
+    updatePayment: async (data) => await http.post("/orders/admin/update-status", data),
+    getListBlog: async () => await http.get('/blogs'),
+    addBlog: async (data, token) => await http.post("/blogs/create", data, {
+
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }),
+
+    getPurchaseHistory: async (token) => await http.get("/orders",{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    ,
+    deleteBlog: async (id) => await http.delete(`/blogs/${id}`)
+
 }
 
 export default API

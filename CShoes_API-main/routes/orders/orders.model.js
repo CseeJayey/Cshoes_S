@@ -33,6 +33,10 @@ function model(sequelize) {
     apartment: {
       type: DataTypes.STRING,
     },
+    payment_status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     shipping_status: {
       type: DataTypes.INTEGER,
     },
