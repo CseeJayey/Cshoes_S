@@ -32,12 +32,22 @@ const API = {
     })
     ,
     deleteBlog: async (id) => await http.delete(`/blogs/${id}`),
+
     getBlogById: async (id) => await http.get(`/blogs/${id}`),
     updateBlog: async(id, token, data)=> await http.post(`/blogs/update/${id}`, data, {
         headers: {
             Authorization: `Bearer ${token}`
         }
-    })
+    }),
+
+    getPurchaseHistory: async (token) => await http.get('/orders/user',
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }),
+
+    getDetailPurchaseHistory : async (id) => await http.get(`/orders/detail/${id}`),
 
 }
 

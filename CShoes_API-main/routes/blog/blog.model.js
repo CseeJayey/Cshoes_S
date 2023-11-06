@@ -10,9 +10,9 @@ function model(sequelize) {
       primaryKey: true,
     },
     authorId: { type: DataTypes.INTEGER },
-    title: { type: DataTypes.STRING },
+    title: { type: DataTypes.STRING(2048) },
     img: { type: DataTypes.STRING },
-    content: { type: DataTypes.STRING },
+    content: { type: DataTypes.STRING(2048) },
     publishedAt: { type: DataTypes.DATE },
   };
   return sequelize.define("Blogs", attributes);

@@ -5,6 +5,7 @@ module.exports = {
   get,
   remove,
   getById,
+  update,
 };
 
 async function create(authorId, body) {
@@ -35,7 +36,14 @@ async function getById(id) {
 }
 
 async function getBlog(id) {
-  const shoe = await db.Blogs.findOne({ where: { id } });
-  if (!shoe) throw "Blogs not found";
-  return shoe;
+  const blog = await db.Blogs.findOne({ where: { id } });
+  if (!blog) throw "Blogs not found";
+  return blog;
+}
+
+async function update(id, params) {
+  const blog = await db.Blogs.findOne({ where: { id } });
+  Object.assign(blog, params);
+  await blog.save();
+  return blog.get();
 }
