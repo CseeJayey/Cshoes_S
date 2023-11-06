@@ -10,6 +10,7 @@ const authorize = require("../../_middleware/authorize");
 router.post("/create", authorize, create);
 router.get("/", get);
 router.get("/:id", getById);
+router.post("/update/:id", authorize, update);
 
 router.delete("/:id", remove);
 module.exports = router;
@@ -46,6 +47,13 @@ function remove(req, res, next) {
 function getById(req, res, next) {
   blogService
     .getById(req.params.id)
+    .then(obj => res.json(obj))
+    .catch(next);
+}
+
+function update(req, res, next) {
+  blogService
+    .update(req.params.id, req.body)
     .then(obj => res.json(obj))
     .catch(next);
 }
