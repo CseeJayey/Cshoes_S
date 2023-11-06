@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './AdminEditProduct.css';
 import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import API from '../../config/api';
 import products from '../Shop/ProductList';
+import { useSelector } from 'react-redux';
 
 const AdminAddProduct = () => {
     const [file, setFile] = useState(null)
@@ -14,6 +15,14 @@ const AdminAddProduct = () => {
     const [brand, setBrand] = useState("1")
     const [loading, setLoading] = useState(false)
     const [listBrand, setListBrand] = useState([])
+    const currentUser = useSelector((state) => state.user.currentUser)
+    const naviagte = useNavigate()
+
+    useEffect(() => {
+        if (!currentUser.isAdmin) {
+            naviagte("/")
+        }
+    }, [])
 
     useEffect(() => {
         const getBrand = async () => {
