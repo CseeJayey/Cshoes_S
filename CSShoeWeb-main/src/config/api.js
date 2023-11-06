@@ -31,7 +31,16 @@ const API = {
         }
     })
     ,
-    deleteBlog: async (id) => await http.delete(`/blogs/${id}`)
+    deleteBlog: async (id) => await http.delete(`/blogs/${id}`),
+
+    getPurchaseHistory: async (token) => await http.get('/orders/user',
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }),
+
+    getDetailPurchaseHistory : async (id) => await http.get(`/orders/detail/${id}`),
 
 }
 
