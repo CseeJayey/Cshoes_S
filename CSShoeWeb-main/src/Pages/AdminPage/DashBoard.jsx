@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import products from '../Shop/ProductList'
 import API from '../../config/api'
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 export default function DashBoard() {
     const [listShoe, setListShoe] = useState([])
     const [render, setRender] = useState(true)
+    const currentUser = useSelector((state) => state.user.currentUser)
+    const naviagte = useNavigate()
+
+    useEffect(() => {
+        if (!currentUser.isAdmin) {
+            naviagte("/")
+        }
+    }, [])
+
     useEffect(() => {
         const getListShoes = async () => {
             try {

@@ -1,25 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminEditProduct.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import products from '../Shop/ProductList';
-import { ShopContext } from '../../context/shop-context';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import API from '../../config/api';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 
-
-const AdminEditProduct = () => {
-    const [shoes, setShoes] = useState(null);
+const AdminEditBlog = () => {
+    const [blog, setBlog] = useState(null);
     const [file, setFile] = useState(null)
-    const [listBrand, setListBrand] = useState([])
-    const [name, setName] = useState("")
-    const [price, setPrice] = useState("")
-    const [brand, setBrand] = useState("")
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
     const [urlImg, setUrlImg] = useState("")
     const [loading, setLoading] = useState(false)
     const param = useParams();
+
     const currentUser = useSelector((state) => state.user.currentUser)
     const naviagte = useNavigate()
 
@@ -30,39 +25,19 @@ const AdminEditProduct = () => {
     }, [])
 
     useEffect(() => {
-        const getProduct = async () => {
+        const getBlog = async () => {
             try {
-                const res = await API.getProductById(param.id)
-                setName(res.data.name)
-                setPrice(res.data.price)
-                setBrand(res.data.brand.BrandID)
-                setUrlImg(res.data.urlImg)
-                setShoes(res.data)
+                const res = await API.getBlogById(param.id)
+                setBlog(res.data)
+                setTitle(res.data.title)
+                setContent(res.data.content)
+                setUrlImg(res.data.img)
             } catch (err) {
 
             }
         }
-        getProduct()
+        getBlog()
     }, [param.id]);
-
-    useEffect(() => {
-        const getBrand = async () => {
-            try {
-                const res = await API.getBrand()
-                setListBrand(res.data)
-            } catch (err) {
-
-            }
-        }
-        getBrand()
-    }, [])
-    const showAddToCartAlert = () => {
-        Swal.fire({
-            title: 'Added To Cart Successfully',
-            icon: 'success',
-            bordered: "none"
-        });
-    };
 
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
@@ -81,9 +56,11 @@ const AdminEditProduct = () => {
             })
             return res.data
         } catch (err) {
+            console.log(err);
             return null
         }
     }
+
     const showMessageError = (message) => {
         Swal.fire({
             title: message,
@@ -92,26 +69,23 @@ const AdminEditProduct = () => {
     };
 
     const handleSubmit = async () => {
-        if (!name || !price) {
+        if (!title || !content) {
             showMessageError("Vui lòng điền đầy đủ thông tin")
             return
         }
         setLoading(true)
         let url = urlImg
-        if(file){
+        if (file) {
             const resUpload = await getUrlImg()
             url = resUpload.data.display_url
         }
         const data = {
-            Name: name,
-            Price: Number(price),
-            BrandID: Number(brand),
-            URL: url,
-            Description: "Edit shoes"
+            title: title,
+            content: content,
+            img: url,
         }
-        console.log(data);
         try {
-            const res = await API.updateProduct(param.id, data)
+            const res = await API.updateBlog(param.id, currentUser.token, data)
             Swal.fire({
                 title: "Lưu thành công",
                 icon: 'success',
@@ -122,26 +96,17 @@ const AdminEditProduct = () => {
         setLoading(false)
     }
 
-    const findBrandId = (name) => {
-        for (let i = 0; i < listBrand.length; i++) {
-            if (listBrand[i].Name == name) {
-                return listBrand[i].BrandID
-            }
-        }
-        return null
-    }
-
     return (
         <div className='container'>
             <div className='mb-6 text-xl'>
-                <Link to={'/admin'} className='hover:no-underline'>DashBoard</Link>
+                <Link to={'/admin/blog'} className='hover:no-underline'>DashBoard</Link>
             </div>
-            {shoes ? (
+            {blog ? (
                 <div className='product-detail'>
                     <div className='product-image'>
                         <div>
                             <div>
-                                <input type="file" accept="image/png, image/gif, image/jpeg" onChange={handleFileChange} />
+                                <input type="file" onChange={handleFileChange} />
                                 <div className='mt-3'>
                                     <img src={file ? URL.createObjectURL(file) : urlImg} alt="Selected" style={{ maxWidth: '100%' }} />
                                 </div>
@@ -153,38 +118,16 @@ const AdminEditProduct = () => {
                         <div className='width-product-infor'>
                             <div className='productSingle'>
                                 <label style={{ fontFamily: 'Karla, sans-serif' }}>
-                                    Tên sản phẩm:
+                                    Tiêu đề:
                                 </label>
                                 <br />
-                                <input className='productName mb-3' value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder='Tên sản phẩm' />
+                                <input value={title} onChange={(e) => setTitle(e.target.value)} className='productName mb-3' type="text" placeholder='Tên blog' />
                                 <label style={{ fontFamily: 'Karla, sans-serif' }}>
-                                    Giá:
+                                    Nội dung:
                                 </label>
                                 <br />
-                                <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder='Giá' />
+                                <textarea value={content} onChange={(e) => setContent(e.target.value)} className='outline outline-offset-2 outline-1' rows={10} />
                             </div>
-
-                            <form className='payment-form'>
-                                <div className='size-selector'>
-                                    <label style={{ fontFamily: 'Karla, sans-serif' }}>
-                                        Brand:
-                                    </label>
-                                    <br />
-                                    <select
-                                        value={brand}
-                                        onChange={(e) => setBrand(e.target.value)}
-                                        className='w-1/5'
-                                        style={{ fontFamily: 'Karla, sans-serif' }}
-                                    >
-                                        {
-                                            listBrand.map((item, index) => (
-                                                <option key={index} value={item.BrandID}>{item.Name}</option>
-                                            ))
-                                        }
-                                    </select>
-                                </div>
-                            </form>
-
                             <div className='purchase-action'>
                                 <div className='addCartBtn'>
                                     {
@@ -204,4 +147,4 @@ const AdminEditProduct = () => {
     );
 }
 
-export default AdminEditProduct;
+export default AdminEditBlog;

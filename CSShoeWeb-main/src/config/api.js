@@ -9,7 +9,7 @@ const API = {
     getProductById: async (id) => await http.get(`/shoes/${id}`),
     updateProduct: async (id, data) => await http.put(`/shoes/${id}`, data),
 
-    createOrder : async (data,token) => await http.post("/orders/create",data,{
+    createOrder: async (data, token) => await http.post("/orders/create", data, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -25,13 +25,20 @@ const API = {
         }
     }),
 
-    getPurchaseHistory: async (token) => await http.get("/orders",{
+    getPurchaseHistory: async (token) => await http.get("/orders", {
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
     ,
     deleteBlog: async (id) => await http.delete(`/blogs/${id}`),
+
+    getBlogById: async (id) => await http.get(`/blogs/${id}`),
+    updateBlog: async(id, token, data)=> await http.post(`/blogs/update/${id}`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }),
 
     getPurchaseHistory: async (token) => await http.get('/orders/user',
     {

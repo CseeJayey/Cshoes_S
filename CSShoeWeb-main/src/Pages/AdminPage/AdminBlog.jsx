@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import products from '../Shop/ProductList'
 import API from '../../config/api'
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 const AdminBlog = () => {
     const [listBlog, setListBlog] = useState([])
     const [render, setRender] = useState(true)
+    const currentUser = useSelector((state) => state.user.currentUser)
+    const naviagte = useNavigate()
+
+    useEffect(() => {
+        if (!currentUser.isAdmin) {
+            naviagte("/")
+        }
+    }, [])
 
     useEffect(() => {
         const getListBlog = async () => {
@@ -92,9 +101,9 @@ const AdminBlog = () => {
                             <div className='w-4/12 flex items-center border-b-[1px] justify-center'>
                                 <div className='line-clamp-2'>{blog.content}</div>
                             </div>
-                            {/* <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
-                                <Link to={`/admin/product/${blog.id}`} className='px-3 py-1 rounded bg-green-500'>Edit</Link>
-                            </div> */}
+                            <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
+                                <Link to={`/admin/blog/${blog.id}`} className='px-3 py-1 rounded bg-green-500'>Edit</Link>
+                            </div>
                             <div className='w-1/12 flex items-center border-b-[1px] justify-center'>
                                 <button onClick={() => handleDelete(blog.id)} className='px-3 py-1 rounded bg-red-500'>Delete</button>
                             </div>

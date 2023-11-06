@@ -41,6 +41,7 @@ import PurchaseHistoryDetail from './Account/PurchaseHistoryDetail';
 import AdminPayment from './Pages/AdminPage/AdminPayment';
 import AdminBlog from './Pages/AdminPage/AdminBlog';
 import AdminAddBlog from './Pages/AdminPage/AdminAddBlog';
+import AdminEditBlog from './Pages/AdminPage/AdminEditBlog';
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -85,7 +86,7 @@ function App() {
               <Route path='/admin/payment' element={<AdminPayment/> }></Route>
               <Route path='/admin/blog' element={<AdminBlog/> }></Route>
               <Route path='/admin/add-blog' element={<AdminAddBlog/> }></Route>
-
+              <Route path='/admin/blog/:id' element={<AdminEditBlog/> }></Route>
             </Routes>
           </div>
           <div className='Footer-main'>

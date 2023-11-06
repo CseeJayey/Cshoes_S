@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import './AdminEditProduct.css';
 import { useState } from 'react';
 import axios from 'axios';
@@ -14,7 +14,14 @@ const AdminAddBlog = () => {
     const [content, setContent] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const currentUser = useSelector((state)=> state.user.currentUser)
+    const currentUser = useSelector((state) => state.user.currentUser)
+    const naviagte = useNavigate()
+
+    useEffect(() => {
+        if (!currentUser.isAdmin) {
+            naviagte("/")
+        }
+    }, [])
 
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
